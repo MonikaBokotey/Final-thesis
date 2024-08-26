@@ -1,0 +1,252 @@
+<mat-toolbar color="primary">
+  <span>Fitness App</span>
+  <span class="spacer"></span>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+</mat-toolbar>
+
+<mat-menu #menu="matMenu">
+  <button mat-menu-item (click)="openUserProfile()">Profile</button>
+</mat-menu>
+<mat-card class="custom-card">
+
+  <!-- Overview Section -->
+  <mat-card-header class="overview-header">
+    <mat-card-title>Overview</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="flex-container">
+      <!-- Your left content -->
+      <div>
+        <p><span class="label">Calories:</span> <span id="total-calories" class="nutrients"></span> <span class="nutrients">/</span> <span id="target-calories" class="nutrients"></span></p>
+        <p>Carbohydrates: <span id="total-carbs" class="nutrients"></span> <span class="nutrients">/</span> <span id="target-carbs" class="nutrients"></span></p>
+        <p>Proteins: <span id="total-protein" class="nutrients"></span> <span class="nutrients">/</span> <span id="target-protein" class="nutrients"></span></p>
+        <p>Fats: <span id="total-fats" class="nutrients"></span> <span class="nutrients">/</span> <span id="target-fats" class="nutrients"></span></p>
+        <p id="target-message"></p>
+      </div>
+
+      <!-- Your right content -->
+      <div>
+        <p><span class="label">Progress towards goal:</span></p>
+        <canvasjs-chart [options]="chartOptions" [styles]="{ width: '100%', height: '200px' }"></canvasjs-chart>
+        <p id="excess-message" style="color: red;"></p>
+      </div>
+    </div>
+  </mat-card-content>
+
+</mat-card>
+
+  <mat-card class="custom-card">
+
+  <!-- Meal Section -->
+  <mat-card-header id="meals-section" class="meals-header">
+    <mat-card-title>Meals</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <p class="label-spacing"><span class="label">Add new meal:</span></p>
+    <form class="example-form">
+     
+        <mat-form-field class="example-full-width rounded-form-field">
+          <mat-label>Meal Name</mat-label>
+          <input matInput [(ngModel)]="mealName" name="mealName" placeholder="Meal Name">
+        </mat-form-field>
+      
+        <mat-form-field class="example-full-width">
+          <mat-label>Calories</mat-label>
+          <input matInput [(ngModel)]="calories" name="calories" placeholder="Calories" type="number">
+        </mat-form-field>
+      
+        <mat-form-field class="example-full-width">
+          <mat-label>Carbohydrates</mat-label>
+          <input matInput [(ngModel)]="carbohydrates" name="carbohydrates" placeholder="Carbohydrates" type="number">
+        </mat-form-field>
+      
+        <mat-form-field class="example-full-width">
+          <mat-label>Fats</mat-label>
+          <input matInput [(ngModel)]="fats" name="fats" placeholder="Fats" type="number">
+        </mat-form-field>
+      
+        <mat-form-field class="example-full-width">
+          <mat-label>Protein</mat-label>
+          <input matInput [(ngModel)]="protein" name="protein" placeholder="Protein" type="number">
+        </mat-form-field>
+      
+        <mat-form-field class="example-full-width">
+          <mat-label>Meal Time</mat-label>
+          <input matInput [(ngModel)]="mealTime" name="mealTime" placeholder="Meal Time" type="time">
+        </mat-form-field>
+      </form>
+
+    
+    <button mat-raised-button color="primary" (click)="addMeal()">Add Meal</button>
+    
+    
+    <!-- <div *ngFor="let meal of meals">
+      <p>{{ meal.mealName }}: {{ meal.calories }} calories</p>
+    </div> -->
+    <table mat-table [dataSource]="meals" class="mat-elevation-z8 rounded-table">
+
+      <!-- Meal Name Column -->
+      <ng-container matColumnDef="mealName">
+        <th mat-header-cell *matHeaderCellDef> Meal Name </th>
+        <td mat-cell *matCellDef="let meal"> {{meal.mealName}} </td>
+      </ng-container>
+    
+      <!-- Calories Column -->
+      <ng-container matColumnDef="calories">
+        <th mat-header-cell *matHeaderCellDef> Calories </th>
+        <td mat-cell *matCellDef="let meal"> {{meal.calories}} </td>
+      </ng-container>
+    
+      <!-- Carbohydrates Column -->
+      <ng-container matColumnDef="carbohydrates">
+        <th mat-header-cell *matHeaderCellDef> Carbohydrates </th>
+        <td mat-cell *matCellDef="let meal"> {{meal.carbohydrates}} </td>
+      </ng-container>
+    
+      <!-- Fats Column -->
+      <ng-container matColumnDef="fats">
+        <th mat-header-cell *matHeaderCellDef> Fats </th>
+        <td mat-cell *matCellDef="let meal"> {{meal.fats}} </td>
+      </ng-container>
+    
+      <!-- Protein Column -->
+      <ng-container matColumnDef="protein">
+        <th mat-header-cell *matHeaderCellDef> Protein </th>
+        <td mat-cell *matCellDef="let meal"> {{meal.protein}} </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="['mealName', 'calories', 'carbohydrates', 'fats', 'protein']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['mealName', 'calories', 'carbohydrates', 'fats', 'protein'];"></tr>
+    </table>
+    
+    
+    <!-- <button mat-raised-button color="accent" (click)="showMeals()">Show Meals</button> -->
+    <div>
+      <p class="label-spacing"><span class="label">Need meal ideas? Try some personalized recommendations!</span></p>
+      <button mat-raised-button color="primary" (click)="showRecommendations()">Find Recommendations</button>
+    </div>
+    
+    <div>
+      <p class="label-spacing"><span class="label">Add or modify food preferences</span></p>
+      <button mat-raised-button color="warn" (click)="openPreferences()">Preferences</button>
+    </div>
+
+
+    <ng-container *ngIf="recommendations">
+      <div *ngFor="let recommendation of recommendations">
+        <h2>{{ recommendation?.Name }}</h2>
+        <p>{{ recommendation?.Description }}</p>
+        <p>{{ recommendation?.Calories }} calories</p>
+        <img *ngIf="recommendation?.Images" [src]="recommendation.Images" alt="Recipe Image" class="recipe-image">
+
+        <button mat-raised-button color="primary" (click)="addMealFromRecommendation(recommendation)">Add Meal</button>
+      </div>
+    </ng-container>
+    
+  </mat-card-content>
+
+  </mat-card>
+  
+  <mat-card class="custom-card">
+
+
+<!-- Workout Section -->
+<mat-card-header id="workouts-section" class="workout-header" >
+  <mat-card-title>Workouts</mat-card-title>
+</mat-card-header>
+<mat-card-content>
+
+<div>
+  <p class="label-spacing"><span class="label">Add new workout</span></p>
+  <mat-form-field class="example-full-width rounded-form-field" >
+    
+    <input type="text" placeholder="Workout Name" matInput [formControl]="nameControl" [matAutocomplete]="name">
+    <mat-autocomplete #name="matAutocomplete">
+      <mat-option *ngFor="let name of workoutNames" [value]="name">
+        {{name}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  
+  <mat-form-field>
+    <input type="text" placeholder="Intensity" matInput [formControl]="intensityControl" [matAutocomplete]="intensity">
+    <mat-autocomplete #intensity="matAutocomplete">
+      <mat-option *ngFor="let intensity of intensities" [value]="intensity">
+        {{intensity}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+  
+  <mat-form-field>
+    <input type="number" placeholder="Reps" matInput [formControl]="repsControl">
+  </mat-form-field>
+  
+  <mat-form-field>
+    <input type="number" placeholder="Duration" matInput [formControl]="durationControl">
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="addWorkout({ name: nameControl.value, reps: repsControl.value, duration: durationControl.value, intensity: intensityControl.value })">Add Workout</button>
+ 
+</div>
+ 
+ 
+
+
+  <!-- <button mat-raised-button color="primary" (click)="showWorkouts()">Show Workouts</button>  -->
+  <table mat-table [dataSource]="workouts" class="mat-elevation-z8 rounded-table">
+    <!-- Workout Name Column -->
+    <ng-container matColumnDef="workoutName">
+      <th mat-header-cell *matHeaderCellDef> Workout Name </th>
+      <td mat-cell *matCellDef="let workout"> {{workout.workoutName}} </td>
+    </ng-container>
+  
+    <!-- Reps Column -->
+    <ng-container matColumnDef="reps">
+      <th mat-header-cell *matHeaderCellDef> Reps </th>
+      <td mat-cell *matCellDef="let workout"> {{workout.reps}} reps</td>
+    </ng-container>
+
+    <!-- Duration Column -->
+    <ng-container matColumnDef="duration">
+      <th mat-header-cell *matHeaderCellDef> Duration </th>
+      <td mat-cell *matCellDef="let workout"> {{workout.duration}}</td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="['workoutName', 'reps', 'duration']"></tr>
+  <tr mat-row *matRowDef="let row; columns: ['workoutName', 'reps', 'duration'];"></tr>
+    
+  </table>
+  
+
+  <div>
+    <button mat-raised-button color="accent" (click)="estimateCaloriesBurned()">Estimate Calories Burned</button> 
+    <p *ngIf="totalCalories">Total calories burned: {{ totalCalories }}</p>
+  </div>
+
+  <div>
+    <p><span class="label">Try working out in real time! The exercises available are: Jumping jacks, Bicep curls and Squats </span></p>
+    <button mat-raised-button color="warn" (click)="startWorkout()">Start Workout</button>
+    <button mat-raised-button color="primary" *ngIf="workoutStarted && !workoutSaved" (click)="saveWorkout()">Save Workout</button>
+    <p *ngIf="workoutSaved">Workout has been saved!</p>
+  </div>
+</mat-card-content>
+
+
+
+
+
+<!-- Display each meal and its calories
+<div *ngFor="let meal of meals">
+  <p>{{ meal.mealName }}: {{ meal.calories }} calories</p>
+</div> -->
+
+<!-- <p id="total-calories"></p>
+<p id="target-calories"></p> 
+<mat-progress-bar style="width: 200px;" mode="determinate" [value]="progressBarValue"></mat-progress-bar> -->
+
+
+
+
+
+</mat-card>

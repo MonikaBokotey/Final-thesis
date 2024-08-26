@@ -1,0 +1,60 @@
+<mat-toolbar color="primary">
+    <span>Fitness App</span>
+  </mat-toolbar>
+  
+  <mat-card>
+
+  </mat-card>
+
+
+
+  <div *ngIf="hasPreferences; else noPreferences">
+    <h1>Modify preferences</h1>
+  <mat-form-field>
+    
+    <input type="text" placeholder="Select food" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+
+  <mat-chip-set role="list">
+    <mat-chip role="listitem" *ngFor="let food of selectedFoods">{{food}}</mat-chip>
+  </mat-chip-set>
+<button mat-raised-button color="primary" (click)="addPreferredFood()">Add Preferences</button>
+  <h2>Delete preferences</h2>
+
+  <mat-chip-listbox aria-label="select a preference">
+    <mat-chip-option *ngFor="let food of preferredFoods" (removed)="remove(food)" [selected]="selectedChips.includes(food)">
+        {{food}}
+        <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+        </button>
+    </mat-chip-option>
+</mat-chip-listbox>
+
+  
+</div>
+
+
+<ng-template #noPreferences>
+  <div>
+  <h1>Add new prefernces</h1>
+<mat-form-field>
+ 
+  <input type="text" placeholder="Select food" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+  <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+      {{option}}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+
+<mat-chip-set role="list">
+  <mat-chip role="listitem" *ngFor="let food of selectedFoods">{{food}}</mat-chip>
+</mat-chip-set>
+
+<button mat-raised-button color="primary" (click)="addPreferredFood()">Add Preferences</button>
+</div></ng-template>

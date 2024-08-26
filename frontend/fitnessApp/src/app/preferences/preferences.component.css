@@ -1,0 +1,17 @@
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    /* background-image: url('/assets/login_background.jpg');
+    background-size: cover; */
+  }
+  
+  mat-toolbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+  }
+  

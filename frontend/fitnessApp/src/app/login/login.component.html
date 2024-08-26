@@ -1,0 +1,25 @@
+<div><form [formGroup]="login" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <mat-label>Username</mat-label>
+    <input matInput formControlName="username">
+  </mat-form-field>
+
+
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password" required>
+    <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+    <mat-hint *ngIf="passwordInput?.value">Enter your password</mat-hint>
+  </mat-form-field>
+
+  <button mat-button color="primary" type="submit">Log in</button>
+
+  <p *ngIf="loginFailed" class="error">
+    Invalid username or password.
+  </p>
+
+  <p>No account? <a routerLink="/signup">Create one here</a></p>
+</form>
+
+<router-outlet></router-outlet>
+</div>

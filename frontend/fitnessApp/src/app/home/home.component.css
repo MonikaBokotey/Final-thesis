@@ -1,0 +1,114 @@
+
+  button {
+    margin: 10px;
+  }
+
+  div {
+    margin: 10px;
+  }
+
+  .right-align {
+    float: right;
+  }
+  
+  .flex-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+  
+  .section-header {
+    background-color: #e1d8e6;
+  }
+
+  .recipe-image {
+    width: 200px; /* adjust as needed */
+    height: auto; /* maintain aspect ratio */
+  }
+  
+  .mat-card {
+    width: 600px; /* Set the desired width */
+    height: 400px; /* Set the desired height */
+    margin: auto; /* Center the card horizontally */
+    padding: 20px; /* Add some padding for better appearance */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Add a slight shadow for depth */
+  }
+  
+  .flex-container {
+    display: flex;
+    justify-content: space-between; /* Distribute space between the two divs */
+    align-items: center; /* Vertically center the content */
+  }
+  
+  .flex-container div {
+    width: 48%; /* Make the two divs take equal width */
+  }
+  
+  .section-header {
+    text-align: center; /* Center the header text */
+  }
+  
+
+  .nutrients {
+    font-size: 24px; /* Make the text larger */
+    color: purple; /* Set the text color to purple */
+  }
+  
+
+  .label {
+    font-size: 18px; /* Make the label larger */
+    font-weight: bold; /* Make the label bold */
+    color: purple;
+  }
+
+  .meals-header {
+    text-align: center; /* Center the header text */
+    background-image: url('/assets/food.jpeg'); /* Replace with your image path */
+    background-size: cover; /* Ensure the image covers the entire header */
+    background-position: center; /* Center the image */
+    color: white; /* Set the text color to white for better contrast */
+    height: 150px; /* Set a fixed height for the header */
+    display: flex; /* Use flexbox to center the title vertically */
+    align-items: center; /* Center the title vertically */
+    justify-content: center; /* Center the title horizontally */
+  }
+
+
+
+  .workout-header {
+    text-align: center; /* Center the header text */
+    background-image: url('/assets/gym4.jpeg'); /* Replace with your image path */
+    background-size: cover; /* Ensure the image covers the entire header */
+    background-position: center; /* Center the image */
+    color: white; /* Set the text color to white for better contrast */
+    height: 150px; /* Set a fixed height for the header */
+    display: flex; /* Use flexbox to center the title vertically */
+    align-items: center; /* Center the title vertically */
+    justify-content: center; /* Center the title horizontally */
+  }
+
+.label-spacing {
+    margin-top: 15px; /* Adjust the value to add more space as needed */
+  }
+
+  .rounded-table {
+    border-radius: 15px; /* Adjust the value to get the desired roundness */
+    overflow: hidden; /* Ensure the rounded corners are not overlapped by the table content */
+  }
+
+  .rounded-form-field {
+    border-radius: 15px; /* Adjust the value to get the desired roundness */
+    overflow: hidden; /* Ensure the rounded corners are not overlapped by the table content */
+  }
+  
+  .overview-header {
+    text-align: center; /* Center the header text */
+    background-image: url('/assets/overview.jpeg'); /* Replace with your image path */
+    background-size: cover; /* Ensure the image covers the entire header */
+    background-position: center; /* Center the image */
+    color: white; /* Set the text color to white for better contrast */
+    height: 150px; /* Set a fixed height for the header */
+    display: flex; /* Use flexbox to center the title vertically */
+    align-items: center; /* Center the title vertically */
+    justify-content: center; /* Center the title horizontally */
+  }
